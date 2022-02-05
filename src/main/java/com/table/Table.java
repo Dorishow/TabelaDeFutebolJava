@@ -1,5 +1,6 @@
 package com.table;
 
+import com.table.matches.ResultsHandler;
 import com.table.services.TableServices;
 import com.table.teams.Team;
 import com.table.utils.DummyFile;
@@ -19,6 +20,10 @@ public class Table {
         Set<String> allTeams;
         allTeams = TableServices.getTeamsFromString(matchesAsStrings);
 
+        ResultsHandler results = new ResultsHandler("santander811matchesResult.csv");
+        results.resultsHandler().getResults().forEach(System.out::println);
+
+
         Comparator tableComparator = Comparator
                 .comparing(Team::getPoints, Comparator.reverseOrder())
                 .thenComparing(Team::getWins, Comparator.reverseOrder())
@@ -26,7 +31,7 @@ public class Table {
                 .thenComparing(Team::getLoses);
 
         SortedSet<Team> table = generateTable(tableComparator);
-        table.forEach(System.out::println);
+//        table.forEach(System.out::println);
     }
 
     private static SortedSet<Team> generateTable(Comparator tableComparator) {
