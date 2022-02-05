@@ -4,7 +4,7 @@ import com.table.enums.MatchResult;
 import com.table.matches.Match;
 import lombok.*;
 
-@ToString
+//@ToString
 @Getter
 @Setter
 @EqualsAndHashCode
@@ -53,13 +53,13 @@ public class Team {
         return result;
     }
 
-//    @Override
-//    public String toString() {
-//        return  name + ';' +
-//                points + ';' +
-//                wins  + ';' +
-//                draws + ';' +
-//                loses  + ';';
-//
-//    }
+    @Override
+    public String toString() {
+        return  name + ';' +
+                points + ';' +
+                wins  + ';' +
+                draws + ';' +
+                loses  + ';';
+
+    }
 }
