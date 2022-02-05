@@ -8,17 +8,17 @@ import java.util.List;
 
 
 @Getter
-public class ResultsHandler {
+public class FileHandler {
 
     private Reader reader;
     private List<String> fileText;
 
-    public ResultsHandler(String path) {
+    public FileHandler(String path) {
         this.reader = new Reader(path);
         this.fileText = FileReader.ReadMatchs.readMatchs(reader);
     }
 
-    public Results resultsHandler() {
+    public Results getMatchesFromFileContent() {
         Results results = new Results();
 
         fileText.forEach(match -> {
