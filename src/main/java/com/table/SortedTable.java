@@ -1,11 +1,13 @@
 package com.table;
 
 import com.table.teams.Team;
+import lombok.Getter;
 
 import java.util.Comparator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+@Getter
 public class SortedTable {
 
     Comparator tableComparator = Comparator
