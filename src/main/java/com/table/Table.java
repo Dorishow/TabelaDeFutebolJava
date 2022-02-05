@@ -1,28 +1,24 @@
 package com.table;
 
+import com.table.matches.Match;
 import com.table.matches.ResultsHandler;
-import com.table.services.TableServices;
 import com.table.teams.Team;
-import com.table.utils.DummyFile;
 
-import java.util.Comparator;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class Table {
+    private static Set<String> allTeams = new HashSet<>();
+
     public static void main(String[] args) {
-        DummyFile file = new DummyFile();
-        String matchesBundleString = file.getFileAsString();
-        Stream<String> matchesAsStrings = matchesBundleString.lines();
 
-        Set<String> allTeams;
-        allTeams = TableServices.getTeamsFromString(matchesAsStrings);
+        ResultsHandler results = readFromFile("santander811matchesResult.csv");
+        List<List<Match>> matchesByTeam = new ArrayList<>();
+        allTeams.forEach(team -> matchesByTeam.add(results.resultsHandler().filterByTeam(team)));
+        matchesByTeam.forEach(team -> generateFileByTeam(team)); //trocar o sout pelo método que itera o arquivo
 
-        ResultsHandler results = new ResultsHandler("santander811matchesResult.csv");
-        results.resultsHandler().getResults().forEach(System.out::println);
 
+        //Calcular os pontos dos times
+        //Adicionar os objetos de times no table abaixo
 
         Comparator tableComparator = Comparator
                 .comparing(Team::getPoints, Comparator.reverseOrder())
@@ -30,8 +26,14 @@ public class Table {
                 .thenComparing(Team::getDraws, Comparator.reverseOrder())
                 .thenComparing(Team::getLoses);
 
-        SortedSet<Team> table = generateTable(tableComparator);
-//        table.forEach(System.out::println);
+        SortedSet<Team> table = new TreeSet<>(tableComparator);
+    }
+
+
+
+    private static void generateFileByTeam(List<Match> Matches){
+        Matches.forEach(System.out::println);
+        System.out.printf("%n---------------------------------------------------%n");
     }
 
     private static SortedSet<Team> generateTable(Comparator tableComparator) {
@@ -44,5 +46,14 @@ public class Table {
         table.add(Team.builder().name("Corinthians").points(24).wins(10).loses(0).draws(0).build());
         table.add(Team.builder().name("Fortaleza").points(27).wins(10).loses(0).draws(0).build());
         return table;
+    }
+
+    private static ResultsHandler readFromFile(String path) {
+        ResultsHandler results = new ResultsHandler(path);
+        results.getFileText().forEach( match -> {
+            String team = match.split(";")[0];
+            allTeams.add(team);
+        } );
+        return results;
     }
 }
