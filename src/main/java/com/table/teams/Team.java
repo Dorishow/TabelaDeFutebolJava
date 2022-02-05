@@ -7,7 +7,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 @Builder
-public class Team {
+public class Team{
     private String name;
     private Integer draws = 0;
     private Integer wins = 0;
