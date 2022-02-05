@@ -12,6 +12,7 @@ public class SortedTable {
 
     Comparator tableComparator = Comparator
             .comparing(Team::getPoints, Comparator.reverseOrder())
+            .thenComparing(Team::getName)
             .thenComparing(Team::getWins, Comparator.reverseOrder())
             .thenComparing(Team::getDraws, Comparator.reverseOrder())
             .thenComparing(Team::getLoses);

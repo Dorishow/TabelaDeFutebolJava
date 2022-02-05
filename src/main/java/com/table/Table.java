@@ -17,7 +17,11 @@ public class Table {
         Map<String, List<Match>> allMatchesOfEachTeam = new HashMap<>();
         teamsList.forEach(team -> allMatchesOfEachTeam.put(team, fileContent.getMatchesFromFileContent().filterByTeam(team)));
         allMatchesOfEachTeam.forEach((team, matches) -> generateFileByTeam(team, matches));
+        System.out.println("---------------------------------");
         sortedTable.table.forEach(System.out::println);
+        System.out.println("---------------------------------");
+//        sortedTable.table.forEach(System.out::println);
+//        teamsList.forEach(System.out::println);
     }
 
     private static void generateFileByTeam(String team, List<Match> matches){
@@ -29,7 +33,8 @@ public class Table {
             else if(result == MatchResult.WIN) newTeam.addWin();
             else if(result == MatchResult.LOOSE) newTeam.addLoose();
         });
-        sortedTable.getTable().add(newTeam); //Add Team to the table file
+        System.out.println(newTeam);
+        sortedTable.table.add(newTeam);
     }
 
     private static FileHandler readFromFile(String path) {
