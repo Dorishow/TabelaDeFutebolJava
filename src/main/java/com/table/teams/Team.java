@@ -5,7 +5,6 @@ import lombok.*;
 @Getter
 @Setter
 @EqualsAndHashCode
-@ToString
 @Builder
 public class Team {
     private String name;
@@ -27,5 +26,15 @@ public class Team {
     public void addDrawn() {
         if (this.draws == null) this.setDraws(1);
         else this.setDraws(this.draws + 1);
+    }
+
+    @Override
+    public String toString() {
+        return  name + ';' +
+                points + ';' +
+                wins  + ';' +
+                draws + ';' +
+                loses  + ';';
+
     }
 }
