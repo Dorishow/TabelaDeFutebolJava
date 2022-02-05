@@ -20,11 +20,16 @@ public class Table {
         allTeams = TableServices.getTeamsFromString(matchesAsStrings);
 
         Comparator tableComparator = Comparator
-            .comparing(Team::getPoints, Comparator.reverseOrder())
-            .thenComparing(Team::getWins, Comparator.reverseOrder())
-            .thenComparing(Team::getDraws, Comparator.reverseOrder())
-            .thenComparing(Team::getLoses);
+                .comparing(Team::getPoints, Comparator.reverseOrder())
+                .thenComparing(Team::getWins, Comparator.reverseOrder())
+                .thenComparing(Team::getDraws, Comparator.reverseOrder())
+                .thenComparing(Team::getLoses);
 
+        SortedSet<Team> table = generateTable(tableComparator);
+        table.forEach(System.out::println);
+    }
+
+    private static SortedSet<Team> generateTable(Comparator tableComparator) {
         SortedSet<Team> table = new TreeSet<>(tableComparator);
 
         table.add(Team.builder().name("Botafogo").points(28).wins(9).loses(0).draws(1).build());
@@ -33,7 +38,6 @@ public class Table {
         table.add(Team.builder().name("Cruzeiro").points(23).wins(9).loses(0).draws(0).build());
         table.add(Team.builder().name("Corinthians").points(24).wins(10).loses(0).draws(0).build());
         table.add(Team.builder().name("Fortaleza").points(27).wins(10).loses(0).draws(0).build());
-
-        table.forEach(System.out::println);
+        return table;
     }
 }
