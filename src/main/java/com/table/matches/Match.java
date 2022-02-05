@@ -5,45 +5,43 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.Comparator;
-
 @Builder
 @Getter
 @ToString
 @EqualsAndHashCode
 public class Match implements Comparable<Match> {
 
-    private String home;
-    private String guest;
-    private String score;
-    private String date;
+    private String homeTeam;
+    private String awayTeam;
+    private String homeTeamScore;
+    private String awayTeamScore;
+    private String matchDate;
 
     @Override
     public int compareTo(Match match) {
-
-        int compareDate = date.compareTo(match.date);
-        if(compareDate != 0) {
-            return compareDate;
-        }
-
-        int compareName = home.compareTo(match.home);
+        int compareName = homeTeam.compareTo(match.homeTeam);
         if(compareName != 0){
             return compareName;
         }
 
-        int compareAwayTeam = guest.compareTo(match.guest);
+        int compareDate = matchDate.compareTo(match.matchDate);
+        if(compareDate != 0) {
+            return compareDate;
+        }
+
+        int compareAwayTeam = awayTeam.compareTo(match.awayTeam);
         if(compareAwayTeam != 0) {
             return compareAwayTeam;
         }
-        return score.compareTo(match.score);
+        int compareAwayTeamScore = awayTeamScore.compareTo(match.awayTeamScore);
+        if(compareAwayTeam != 0) {
+            return compareAwayTeamScore;
+        }
+         return homeTeamScore.compareTo(match.homeTeamScore);
     }
 
     public int matchWinner(){
-        String[] splitMatchScore = score.split("-");
-        int homeTeamScore = Integer.parseInt(splitMatchScore[0]);
-        int awayTeamScore = Integer.parseInt(splitMatchScore[1]);
-//        System.out.println(Integer.compare(homeTeamScore, awayTeamScore));
-        return Integer.compare(homeTeamScore, awayTeamScore);
+        return homeTeamScore.compareTo(awayTeamScore);
     }
 
 
