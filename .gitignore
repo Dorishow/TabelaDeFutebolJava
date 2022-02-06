@@ -5,4 +5,3 @@
 # file: ~/.gitignore_global
 .DS_Store
 .idea
-/src/main/files/
