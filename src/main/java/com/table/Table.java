@@ -18,22 +18,26 @@ public class Table {
         Map<String, List<Match>> allMatchesOfEachTeam = new HashMap<>();
         teamsList.forEach(team -> allMatchesOfEachTeam.put(team, fileContent.getMatchesFromFileContent().filterByTeam(team)));
         allMatchesOfEachTeam.forEach((team, matches) -> generateFileByTeam(team, matches));
-//        System.out.println("---------------------------------");
-//        sortedTable.table.forEach(System.out::println);
-//        System.out.println("---------------------------------");
+        generateTableFile();
+    }
+
+    private static void generateTableFile() {
+        final String[] sortedTableFileContent = {""};
+        sortedTable.getTable().forEach(team -> sortedTableFileContent[0] += team + "\n");
+        FilesWriter.Write("src/main/files/table/table.csv", sortedTableFileContent[0]);
     }
 
     private static void generateFileByTeam(String team, List<Match> matches){
         Team newTeam = Team.builder().name(team).points(0).wins(0).draws(0).loses(0).build();
         final String[] fileContent = {""};
         matches.forEach(match -> {
-            fileContent[0] += match + "\n\r";
+            fileContent[0] += match + "\n";
             MatchResult result = newTeam.handleMatch(match);
             if(result == MatchResult.DRAW) newTeam.addDraw();
             else if(result == MatchResult.WIN) newTeam.addWin();
             else if(result == MatchResult.LOOSE) newTeam.addLoose();
         });
-        FilesWriter.Write("src/main/files/".concat(team).concat(".csv"), fileContent[0]);
+        FilesWriter.Write("src/main/files/teams/".concat(team).concat(".csv"), fileContent[0]);
         System.out.println(newTeam);
         sortedTable.table.add(newTeam);
     }
