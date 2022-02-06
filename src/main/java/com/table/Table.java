@@ -1,6 +1,5 @@
 package com.table;
 
-import com.table.enums.MatchResult;
 import com.table.matches.Match;
 import com.table.teams.Team;
 import com.table.utils.filesGenerator.FilesWriter;
@@ -28,10 +27,7 @@ public class Table {
         final String[] fileContent = {""};
         matches.forEach(match -> {
             fileContent[0] += match + "\n";
-            MatchResult result = newTeam.handleMatch(match);
-            if(result == MatchResult.DRAW) newTeam.addDraw();
-            else if(result == MatchResult.WIN) newTeam.addWin();
-            else if(result == MatchResult.LOOSE) newTeam.addLoose();
+            newTeam.handleResult(match);
         });
         FilesWriter.Write("src/main/files/teams/".concat(team).concat(".csv"), fileContent[0]);
         sortedTable.table.add(newTeam);

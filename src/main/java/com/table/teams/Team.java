@@ -62,4 +62,11 @@ public class Team {
                 loses  + ';';
 
     }
+
+    public void handleResult(Match match) {
+        MatchResult result = this.handleMatch(match);
+        if(result == MatchResult.DRAW) this.addDraw();
+        else if(result == MatchResult.WIN) this.addWin();
+        else if(result == MatchResult.LOOSE) this.addLoose();
+    }
 }
