@@ -1,4 +1,4 @@
-package com.table.utils.writeFiles;
+package com.table.utils.filesGenerator;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,8 +21,4 @@ public class FilesWriter {
         }
         return wroteFile;
     }
-
-//    public static void main(String[] args) {
-//        Write("src/main/files/file.csv", "Conteúdo /r/n do /r/n arquivo /r/n");
-//    }
 }
