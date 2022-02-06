@@ -4,7 +4,8 @@ import com.table.enums.MatchResult;
 import com.table.matches.Match;
 import com.table.matches.FileHandler;
 import com.table.teams.Team;
-import com.table.utils.writeFiles.FilesWriter;
+import com.table.utils.services.FileContentGetter;
+import com.table.utils.filesGenerator.FilesWriter;
 
 import java.util.*;
 
@@ -14,10 +15,11 @@ public class Table {
 
     public static void main(String[] args) {
 
-        FileHandler fileContent = readFromFile("santander811matchesResult.csv");
+        FileHandler fileContent = FileContentGetter.readFromFile("santander811matchesResult.csv");
+        teamsList = FileContentGetter.getMatchHostsFromFile(fileContent);
         Map<String, List<Match>> allMatchesOfEachTeam = new HashMap<>();
         teamsList.forEach(team -> allMatchesOfEachTeam.put(team, fileContent.getMatchesFromFileContent().filterByTeam(team)));
-        allMatchesOfEachTeam.forEach((team, matches) -> generateFileByTeam(team, matches));
+        allMatchesOfEachTeam.forEach((team, matches) -> generateFilesByTeam(team, matches));
         generateTableFile();
     }
 
@@ -27,7 +29,7 @@ public class Table {
         FilesWriter.Write("src/main/files/table/table.csv", sortedTableFileContent[0]);
     }
 
-    private static void generateFileByTeam(String team, List<Match> matches){
+    private static void generateFilesByTeam(String team, List<Match> matches){
         Team newTeam = Team.builder().name(team).points(0).wins(0).draws(0).loses(0).build();
         final String[] fileContent = {""};
         matches.forEach(match -> {
@@ -38,20 +40,8 @@ public class Table {
             else if(result == MatchResult.LOOSE) newTeam.addLoose();
         });
         FilesWriter.Write("src/main/files/teams/".concat(team).concat(".csv"), fileContent[0]);
-        System.out.println(newTeam);
         sortedTable.table.add(newTeam);
     }
 
-    private static FileHandler readFromFile(String path) {
-        FileHandler results = new FileHandler(path);
-        updateTeamsList(results);
-        return results;
-    }
 
-    private static void updateTeamsList(FileHandler results) {
-        results.getFileText().forEach(match -> {
-            String team = match.split(";")[0];
-            teamsList.add(team);
-        } );
-    }
 }
