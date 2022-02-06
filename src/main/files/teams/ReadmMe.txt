@@ -1,0 +1,2 @@
+Dentro do diretório teams serão adicionados os arquivos referentes aos jogos de cada time registrado no arquivo .csv
+presente na pasta raiz do projeto.
