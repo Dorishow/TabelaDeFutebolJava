@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 /target
+/files
 # file: ~/.gitignore_global
 .DS_Store
 .idea
